@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+<title>DATA GO JP</title>
+
+<!-- my base css -->
+<link href="css/base.css" rel="stylesheet">
+
+<!-- Bootstrap -->
+<link href="css/bootstrap.min.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<div class="mt20">&nbsp</div>
+	<div class="mt20">&nbsp</div>
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3">
+			<div class="input-group">
+				<span class="input-group-addon" style="width:100px; background:url(images/logo-bg.png);"><img title="データカタログサイト" alt="データカタログサイト" src="images/logo.png"></span>
+				<input id="q" type="text" class="form-control" placeholder="データセットを検索..." value="" /> 
+				<span class="input-group-btn">
+					<button id="search" class="btn btn-default" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;" type="button">Go!</button> <a id="faqPage" href="javascript:;" onclick="Datago.clickFaqPage(this)"><button class="btn btn-default" style="margin-left: 5px; border-radius: 4px;" type="button">FAQ</button></a>
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- begin document -->
+	<div class="mt20">&nbsp</div>
+	<div class="container-fluid">
+		<div>Full-text Search Result</div>
+		<div id="document-info" style="color: grey;"></div>
+		<div class="row" style="margin: 0px;">
+			<div class="table-responsive" style="border: none;">
+				<table class="table">
+					<tbody id="document-content">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<textarea id="document-template" style="display: none"><!--
+		{#foreach $T.documents as document}
+			<tr>
+              <td><a href="javascript:;" onclick="Datago.clickDocument(this)" docId="{$T.document.id}" url="{$T.document.url}">{$T.document.title}</a></td>
+            </tr>
+            {#if $T.document.info}
+				<tr>
+	              <td>
+					{$T.document.info}
+	              </td>
+	            </tr>
+			{#/if}
+        {#/for}
+	--></textarea>
+	<!-- end document -->
+
+	<!-- begin faq -->
+	<div class="mt20">&nbsp</div>
+	<div class="container-fluid">
+		<div>FAQ Search Result</div>
+		<div id="faq-info" style="color: grey;"></div>
+		<div class="row" style="margin: 0px;">
+			<div class="table-responsive" style="border: none;">
+				<table class="table">
+					<tbody id="faq-content">
+
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<textarea id="faq-template" style="display: none"><!--
+		{#foreach $T.faqs as faq}
+			<tr>
+              <td><a href="javascript:;" onclick="Datago.clickFaq(this)" faqId="{$T.faq.id}" url="{$T.faq.url}">{$T.faq.title}</a></td>
+            </tr>
+        {#/for}
+	--></textarea>
+	<!-- end faq -->
+
+	<!-- begin suggest keyword -->
+	<div class="mt20">&nbsp</div>
+	<div class="container-fluid">
+		<div>Suggest Keyword</div>
+		<div id="suggest-info" style="color: grey;"></div>
+		<div id="suggest-content"></div>
+	</div>
+
+	<textarea id="suggest-template" style="display: none"><!--
+		{#foreach $T.suggests as suggest}
+              <a class="ml5" href="javascript:;" onclick="Datago.clickSuggest(this)" associatedKeyword="{$T.suggest.associatedKeyword}"><span class="label label-info" style="line-height: 30px;">{$T.suggest.associatedKeyword}</span></a>
+        {#/for}
+	--></textarea>
+	<!-- end suggest keyword -->
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="js/layer_mobile/layer.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-jtemplates.js"></script>
+	<script src="js/search.js"></script>
+</body>
+</html>
