@@ -17,7 +17,7 @@ import javax.xml.ws.WebServiceFeature;
  * Generated source version: 2.1
  * 
  */
-@WebServiceClient(name = "RightNowKnowledgeService", targetNamespace = "urn:wsdl.ws.rightnow.com/v1", wsdlLocation = "http://rnowgse01059.rightnowdemo.com/cgi-bin/rnowgse01059.cfg/services/kf_soap?wsdl")
+@WebServiceClient(name = "RightNowKnowledgeService", targetNamespace = "urn:wsdl.ws.rightnow.com/v1", wsdlLocation = "http://rnowgse00537-jp.rightnowdemo.com/cgi-bin/rnowgse00537_jp.cfg/services/kf_soap?wsdl")
 public class RightNowKnowledgeService
     extends Service
 {
@@ -30,9 +30,9 @@ public class RightNowKnowledgeService
         try {
             URL baseUrl;
             baseUrl = com.oracle.datago.model.rightnow.RightNowKnowledgeService.class.getResource(".");
-            url = new URL(baseUrl, "http://rnowgse01059.rightnowdemo.com/cgi-bin/rnowgse01059.cfg/services/kf_soap?wsdl");
+            url = new URL(baseUrl, "http://rnowgse00537-jp.rightnowdemo.com/cgi-bin/rnowgse00537_jp.cfg/services/kf_soap?wsdl");
         } catch (MalformedURLException e) {
-            logger.warning("Failed to create URL for the wsdl Location: 'http://rnowgse01059.rightnowdemo.com/cgi-bin/rnowgse01059.cfg/services/kf_soap?wsdl', retrying as a local file");
+            logger.warning("Failed to create URL for the wsdl Location: 'http://rnowgse00537-jp.rightnowdemo.com/cgi-bin/rnowgse00537_jp.cfg/services/kf_soap?wsdl', retrying as a local file");
             logger.warning(e.getMessage());
         }
         RIGHTNOWKNOWLEDGESERVICE_WSDL_LOCATION = url;

@@ -53,9 +53,10 @@
 	</div>
 
 	<textarea id="document-template" style="display: none"><!--
-		{#foreach $T.documents as document}
+		{#foreach $T.items as document}
 			<tr>
-              <td><a href="javascript:;" onclick="Datago.clickDocument(this)" docId="{$T.document.id}" url="{$T.document.url}">{$T.document.title}</a></td>
+              <td><a href="javascript:;" onclick="Datago.clickDocument(this)" docId="{$T.document.id}">{$T.document.name}</a> 
+					<a href="javascript:;" style="text-align: right;float: right;" onclick="Datago.downloadDocument(this)" docId="{$T.document.id}">download</a></td>
             </tr>
             {#if $T.document.info}
 				<tr>

@@ -30,9 +30,37 @@ Datago.search = (function() {
 	});
 	
 	// document
+//	$.ajax({
+//	   type: "GET",
+//	   url: Datago.document_api + "?q=" + q,
+//	   dataType:'json',
+//	   success: function(res){
+//			// result
+//		   $("#document-content").setTemplateElement("document-template");
+//			$("#document-content").processTemplate(res);
+//			
+//			// result count
+//			var	result_info = '0 results';
+//			if(res && res.documents){
+//				result_info =  res.documents.length + ' results';
+//			}
+//			$("#document-info").html(result_info);
+//	   },
+//	   error:function(){
+//		   layer.open({content: 'search document failed'});
+//	   }
+//	});
+
+	
 	$.ajax({
 	   type: "GET",
-	   url: Datago.document_api + "?q=" + q,
+	   async:false,
+	   crossDomain: true,
+	   headers: {
+			'Authorization': Datago.cec_token,
+			'Accept':' application/json',
+				},
+	   url: Datago.document_api + "?fulltext=" + q,
 	   dataType:'json',
 	   success: function(res){
 			// result
@@ -41,8 +69,13 @@ Datago.search = (function() {
 			
 			// result count
 			var	result_info = '0 results';
-			if(res && res.documents){
-				result_info =  res.documents.length + ' results';
+			if(res && res.count > 0){
+				var len = 0;
+				for (var i = 0; i < res.count; i++) {
+					if(res.items[i].type == "file") len ++;
+				}
+//				debugger
+				result_info =  len + ' results';
 			}
 			$("#document-info").html(result_info);
 	   },
@@ -50,6 +83,8 @@ Datago.search = (function() {
 		   layer.open({content: 'search document failed'});
 	   }
 	});
+	
+	
 	// faq
 	$.ajax({
 		type: "GET",
@@ -106,11 +141,67 @@ Datago.redirect = (function() {
 	window.location.href = Datago.search_page + "?q=" + q + "&sid=" + Datago.sid;
 });
 
+//Datago.clickDocument = (function(obj) {
+//	var docId = $(obj).attr("docId");
+//	var url = $(obj).attr("url");
+//	console.log('click document:' + docId);
+//	window.open(url);
+//	Datago.log('select_doc', docId);
+//});
+
+
+Datago.downloadDocument = (function(obj) {
+	var docId = $(obj).attr("docId");
+	var url = '';
+	console.log('download document:' + docId);
+	$.ajax({
+		   type: "GET",
+		   url: Datago.download_api  + "?q=" +  docId,
+		   dataType:'json',
+		   success: function(res){
+			   if(res && res.url){
+				   url = 'http://' + window.location.host + '/datago' + res.url;
+				   window.open(url);
+			   }
+		   },
+		   error:function(){
+			   layer.open({content: 'download document failed'});
+		   }
+		});
+
+	
+	Datago.log('select_doc', docId);
+});
+
+
 Datago.clickDocument = (function(obj) {
 	var docId = $(obj).attr("docId");
-	var url = $(obj).attr("url");
+	var url = '';
 	console.log('click document:' + docId);
-	window.open(url);
+
+	window.open('http://' + window.location.host + "/datago/file_preview.html?" + docId);
+
+//	$.ajax({
+//		   type: "GET",
+//		   async:false,
+//		   crossDomain: true,
+//		   headers: {
+//				'Authorization': Datago.token,
+//				'Accept':' application/json',
+//					},
+//		   url: Datago.preview_doc_req + docId +'/previewPath',
+//		   dataType:'json',
+//		   success: function(res){
+//			   if(res && res.previewUrl){
+//				   url = res.previewUrl;
+//			   }
+//		   },
+//		   error:function(){
+//			   layer.open({content: 'open document failed'});
+//		   }
+//		});
+//
+//	window.open(url);
 	Datago.log('select_doc', docId);
 });
 
@@ -150,10 +241,14 @@ Datago.log = (function(type, value) {
 
 Datago.init = (function() {
 	Datago.search_page = 'http://' + window.location.host + '/datago/search.html';
-	Datago.document_api = 'http://' + window.location.host + '/datago/api/document';
+//	Datago.document_api = 'http://' + window.location.host + '/datago/api/document';
+	Datago.download_api = 'http://' + window.location.host + '/datago/api/document/download';
+	Datago.document_api = 'https://testenvjp-a18025.documents.us2.oraclecloud.com/documents/api/1.2/folders/search/items';
 	Datago.faq_api = 'http://' + window.location.host + '/datago/api/faq';
 	Datago.suggest_api = 'http://' + window.location.host + '/datago/api/suggest';
-	Datago.faq_page = 'http://rnowgse01059.rightnowdemo.com/app/faq/st/5/kw/';
+	Datago.faq_page = 'https://rnowgse00537-jp.rightnowdemo.com/app/answers/list/kw/';
+	Datago.cec_token = "Basic c2hhcm9uLmxpQG9yYWNsZS5jb206UDNyZjNjNGRAeSE=";
+//	Datago.preview_doc_req = 'https://testenvjp-a18025.documents.us2.oraclecloud.com/documents/api/1.2/files/';
 	Datago.log_api = 'http://' + window.location.host + '/datago/api/log';
 	Datago.sid = Datago.getParam('sid');
 	if(!Datago.sid){

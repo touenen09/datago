@@ -15,7 +15,7 @@ import com.oracle.datago.model.Document;
 import com.oracle.datago.model.Response;
 import com.oracle.datago.service.solr.DocumentService;
 
-@Path("/document")
+@Path("/cec_document")
 @Singleton
 public class CecDocumentController {
 
