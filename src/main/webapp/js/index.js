@@ -8,12 +8,12 @@ Datago.redirect = (function() {
 	if($.trim(q) == ''){
 		return;
 	}
-	window.location.href = Datago.search_page + "?q=" + q;
+	window.location.href = Datago.search_page + "?q=" + q + "&productId=&productName=&categoryId=&categoryName=";
 });
 
 
 Datago.init = (function() {
-	Datago.search_page = 'http://' + window.location.host + "/datago/search.html";
+	Datago.search_page = 'http://' + window.location.host + "/kmportal/search.html";
 	$("#q").focus();
 	$('#search').click(Datago.redirect);
 	$("#q").keydown(function() {

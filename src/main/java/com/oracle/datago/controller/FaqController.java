@@ -1,5 +1,7 @@
 package com.oracle.datago.controller;
 
+import java.util.List;
+
 import javax.inject.Singleton;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -11,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import com.oracle.datago.model.Response;
 import com.oracle.datago.service.faq.FaqService;
+import com.rightnow.ws.base.v1_3.RNObject;
 
 @Path("/faq")
 @Singleton
@@ -22,11 +25,24 @@ public class FaqController {
 	@GET
 	@Path("/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getFaqs(@QueryParam("q") String q) {
-		logger.debug(q);
+	public Response getFaqs(
+			@QueryParam("q") String q,
+			@QueryParam("productId") String productId,
+			@QueryParam("categoryId") String categoryId) {
+
+		logger.debug("q=" + q + ",productId=" + productId + ",categoryId=" + categoryId);
 		Response response = new Response();
-		response.setFaqs(faqService.getFaqs(q));
+		response.setFaqs(faqService.getFaqs(q, productId, categoryId));
 		return response;
+	}
+	
+	@GET
+	@Path("/filter")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<RNObject> getFilters(@QueryParam("name") String name) {
+		logger.debug(name);
+		List<RNObject> filters = faqService.getFilters(name);
+		return filters;
 	}
 
 }
